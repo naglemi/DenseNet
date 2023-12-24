@@ -36,6 +36,7 @@ def get_arguments():
     parser.add_argument("--grid_type", default=12, help="Type of grid (grid type 1 - 12 explants)")
     parser.add_argument("--crop_dims", default=cfg.CROP_DIMS, help="Crop dimensions")
     parser.add_argument("--debug", action='store_true', help="Crop dimensions")
+    parser.add_argument("--weights_path", default=cfg.weights_path, help="Optional path to weights file")
     return parser.parse_args()
 
 def main():
@@ -62,7 +63,7 @@ def main():
 
     # Initialize the pretrained model
     print("Intializing the pretrained model")
-    model = DenseNet(reduction=0.5, classes=cfg.num_classes, weights_path=cfg.weights_path)
+    model = DenseNet(reduction=0.5, classes=cfg.num_classes, weights_path=args.weights_path)
     sgd = SGD(lr=1e-2, decay=1e-4, momentum=0.9, nesterov=True)
     model.compile(optimizer=sgd, loss='categorical_crossentropy', metrics=['accuracy'])
     print("Model loaded sucessfully!")
